@@ -6,6 +6,30 @@
     <title>页面标题</title>
 </head>
 <body>
-    
+    <style>
+  a.rainbow {
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+  a.rainbow span {
+    display: inline-block;
+    animation: hue 3s ease-in-out infinite;
+  }
+  a.rainbow span:nth-child(1) { color: #ff6b6b; animation-delay: 0s; }
+  a.rainbow span:nth-child(2) { color: #feca57; animation-delay: .15s; }
+  a.rainbow span:nth-child(3) { color: #1dd1a1; animation-delay: .3s; }
+  a.rainbow span:nth-child(4) { color: #48dbfb; animation-delay: .45s; }
+  a.rainbow span:nth-child(5) { color: #a29bfe; animation-delay: .6s; }
+  @keyframes hue {
+    0%,100% { transform: translateY(0); filter: brightness(1); }
+    50%     { transform: translateY(-4px); filter: brightness(1.4); }
+  }
+</style>
+
+<a class="rainbow" href="https://zy2015.de5.net/admin">
+  <span>彩</span><span>虹</span><span>链</span><span>接</span><span>✨</span>
+</a>
 </body>
 </html>

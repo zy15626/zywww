@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的应用 · 多彩版</title>
+<style>
+  * { box-sizing: border-box; }
+
+  :root {
+    --c1: #ff6b6b;
+    --c2: #feca57;
+    --c3: #48dbfb;
+    --c4: #1dd1a1;
+    --c5: #a29bfe;
+    --ink: #2d3436;
+  }
+
+  body {
+    font-family: "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+    margin: 0;
+    padding: 24px 16px;
+    min-height: 100vh;
+    color: var(--ink);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-attachment: fixed;
+  }
+
+  h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 34px;
+    letter-spacing: 2px;
+    text-shadow: 0 4px 14px rgba(0,0,0,.35);
+    margin-bottom: 24px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  section {
+    background: rgba(255,255,255,.92);
+    border-radius: 18px;
+    padding: 20px 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    border-top: 6px solid transparent;
+    transition: transform .25s, box-shadow .25s;
+  }
+  section:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.25); }
+
+  section:nth-of-type(1) { border-image: linear-gradient(90deg, var(--c1), var(--c2)) 1; border-top: 6px solid var(--c1); }
+  section:nth-of-type(2) { border-top: 6px solid var(--c5); }
+  section:nth-of-type(3) { border-top: 6px solid var(--c4); }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 18px;
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    color: #fff;
+  }
+  section:nth-of-type(1) h2 { background: linear-gradient(90deg, var(--c1), var(--c2)); }
+  section:nth-of-type(2) h2 { background: linear-gradient(90deg, var(--c5), var(--c3)); }
+  section:nth-of-type(3) h2 { background: linear-gradient(90deg, var(--c4), var(--c3)); }
+
+  input, button { font-size: 14px; border-radius: 10px; }
+
+  input {
+    padding: 10px 12px;
+    border: 2px solid #dfe6e9;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    background: #fdfdfd;
+  }
+  input:focus {
+    border-color: var(--c3);
+    box-shadow: 0 0 0 4px rgba(72,219,251,.25);
+  }
+
+  button {
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, var(--c3), var(--c5));
+    box-shadow: 0 4px 12px rgba(72,219,251,.4);
+    transition: transform .15s, box-shadow .15s, filter .15s;
+  }
+  button:hover { transform: translateY(-2px) scale(1.03); filter: brightness(1.1); box-shadow: 0 8px 20px rgba(72,219,251,.55); }
+  button:active { transform: scale(.96); }
+
+  button.danger {
+    background: linear-gradient(135deg, var(--c1), #ee5253);
+    box-shadow: 0 4px 12px rgba(255,107,107,.4);
+  }
+
+  #searchBox { width: 60%; margin-right: 8px; }
+
+  #searchResult {
+    margin-top: 12px;
+    color: #636e72;
+    min-height: 20px;
+  }
+
+  .doc-item {
+    padding: 10px 14px;
+    margin: 8px 0;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(254,202,87,.25), rgba(255,107,107,.15));
+    border-left: 4px solid var(--c2);
+    animation: fadeIn .35s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .doc-item strong { color: var(--c1); }
+
+  #userInfo {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    background: #dfe6e9;
+    color: #636e72;
+    margin-bottom: 10px;
+  }
+  #userInfo.logged-in {
+    background: linear-gradient(90deg, var(--c4), var(--c3));
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(29,209,161,.4);
+  }
+
+  hr { border: none; height: 1px; background: linear-gradient(90deg, transparent, var(--c3), transparent); margin: 16px 0; }
+
+  #mediaGallery { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; }
+
+  #mediaGallery .item {
+    position: relative;
+    padding: 8px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #fff, #f1f2f6);
+    box-shadow: 0 6px 18px rgba(0,0,0,.15);
+    transition: transform .2s;
+  }
+  #mediaGallery .item:hover { transform: scale(1.04) rotate(-1deg); }
+
+  #mediaGallery img, #mediaGallery video {
+    max-width: 200px;
+    max-height: 150px;
+    display: block;
+    border-radius: 10px;
+  }
+
+  #mediaGallery .del {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px; height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--c1);
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(255,107,107,.5);
+    transition: transform .15s;
+  }
+  #mediaGallery .del:hover { transform: scale(1.2); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>✨ 我的多彩应用 ✨</h1>
+
+  <!-- 1. 文档 + 搜索 -->
+  <section>
+    <h2>📄 文档与搜索</h2>
+    <input id="searchBox" type="text" placeholder="输入关键词搜索文档...">
+    <button onclick="doSearch()">🔍 搜索</button>
+    <div id="searchResult"></div>
+    <hr>
+    <div id="docList"></div>
+  </section>
+
+  <!-- 2. 注册 / 登录 -->
+  <section>
+    <h2>👤 注册 / 登录</h2>
+    <div id="userInfo">当前未登录</div>
+    <br>
+    <input id="username" type="text" placeholder="账号">
+    <input id="password" type="password" placeholder="密码">
+    <button onclick="register()">📝 注册</button>
+    <button onclick="login()">🔑 登录</button>
+    <button class="danger" onclick="logout()">🚪 退出</button>
+  </section>
+
+  <!-- 3. 上传图片/视频 -->
+  <section>
+    <h2>🖼️ 上传图片 / 视频</h2>
+    <input id="fileInput" type="file" accept="image/*,video/*" multiple>
+    <button onclick="uploadFiles()">⬆️ 上传并保存</button>
+    <div id="mediaGallery"></div>
+  </section>
+</div>
+
+<script>
+/* ================= 数据存储 ================= */
+const DOCS_KEY = 'my_docs';
+const USERS_KEY = 'my_users';
+
+function initDocs() {
+  if (!localStorage.getItem(DOCS_KEY)) {
+    const docs = [
+      { title: 'HTML 入门', content: 'HTML 是网页的骨架，用标签描述内容结构。' },
+      { title: 'CSS 基础', content: 'CSS 负责网页的样式，比如颜色、字体、布局。' },
+      { title: 'JavaScript 简介', content: 'JavaScript 让网页具有交互能力。' },
+      { title: '视频播放', content: '使用 video 标签可以在网页中播放视频。' },
+      { title: '图片显示', content: '使用 img 标签在网页上显示图片。' }
+    ];
+    localStorage.setItem(DOCS_KEY, JSON.stringify(docs));
+  }
+}
+
+/* ================= 1. 文档搜索 ================= */
+function renderDocs() {
+  const docs = JSON.parse(localStorage.getItem(DOCS_KEY) || '[]');
+  document.getElementById('docList').innerHTML = docs.map(d =>
+    `<div class="doc-item"><strong>${d.title}</strong>：${d.content}</div>`
+  ).join('');
+}
+
+function doSearch() {
+  const kw = document.getElementById('searchBox').value.trim().toLowerCase();
+  const docs = JSON.parse(localStorage.getItem(DOCS_KEY) || '[]');
+  const result = document.getElementById('searchResult');
+  if (!kw) { result.textContent = '请输入关键词'; return; }
+  const hits = docs.filter(d =>
+    d.title.toLowerCase().includes(kw) || d.content.toLowerCase().includes(kw)
+  );
+  result.innerHTML = hits.length === 0
+    ? '😢 没有找到相关内容。'
+    : `🎯 找到 ${hits.length} 条：<br>` + hits.map(d =>
+        `<div class="doc-item"><strong>${d.title}</strong>：${d.content}</div>`).join('');
+}
+
+/* ================= 2. 注册 / 登录 ================= */
+function getUsers() { return JSON.parse(localStorage.getItem(USERS_KEY) || '{}'); }
+function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); }
+
+function register() {
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value;
+  if (!u || !p) { alert('账号和密码不能为空'); return; }
+  const users = getUsers();
+  if (users[u]) { alert('该账号已存在，请直接登录'); return; }
+  users[u] = p;
+  saveUsers(users);
+  localStorage.setItem('current_user', u);
+  updateUserInfo();
+  alert('注册成功，已自动登录');
+}
+
+function login() {
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value;
+  const users = getUsers();
+  if (!users[u]) { alert('账号不存在'); return; }
+  if (users[u] !== p) { alert('密码错误'); return; }
+  localStorage.setItem('current_user', u);
+  updateUserInfo();
+  alert('登录成功');
+}
+
+function logout() { localStorage.removeItem('current_user'); updateUserInfo(); }
+
+function updateUserInfo() {
+  const u = localStorage.getItem('current_user');
+  const el = document.getElementById('userInfo');
+  el.textContent = u ? '当前登录：' + u : '当前未登录';
+  el.classList.toggle('logged-in', !!u);
+}
+
+/* ================= 3. 上传图片/视频 ================= */
+let db;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open('my_media_db', 1);
+    req.onupgradeneeded = e => {
+      const d = e.target.result;
+      if (!d.objectStoreNames.contains('files')) d.createObjectStore('files', { keyPath: 'id', autoIncrement: true });
+    };
+    req.onsuccess = e => { db = e.target.result; resolve(db); };
+    req.onerror = e => reject(e);
+  });
+}
+
+function addFile(blob, type, name) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('files', 'readwrite');
+    const req = tx.objectStore('files').add({ blob, type, name, time: Date.now() });
+    req.onsuccess = () => resolve();
+    req.onerror = e => reject(e);
+  });
+}
+
+function getAllFiles() {
+  return new Promise((resolve, reject) => {
+    const req = db.transaction('files', 'readonly').objectStore('files').getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = e => reject(e);
+  });
+}
+
+function deleteFile(id) {
+  return new Promise((resolve, reject) => {
+    const req = db.transaction('files', 'readwrite').objectStore('files').delete(id);
+    req.onsuccess = () => resolve();
+    req.onerror = e => reject(e);
+  });
+}
+
+async function uploadFiles() {
+  const files = document.getElementById('fileInput').files;
+  if (files.length === 0) { alert('请先选择图片或视频'); return; }
+  for (const f of files) {
+    await addFile(f, f.type.startsWith('image/') ? 'image' : 'video', f.name);
+  }
+  document.getElementById('fileInput').value = '';
+  alert('已保存到本地，下次访问仍可看到');
+  renderGallery();
+}
+
+async function renderGallery() {
+  const list = await getAllFiles();
+  const box = document.getElementById('mediaGallery');
+  box.innerHTML = '';
+  list.forEach(item => {
+    const url = URL.createObjectURL(item.blob);
+    const div = document.createElement('div');
+    div.className = 'item';
+
+    const media = document.createElement(item.type === 'image' ? 'img' : 'video');
+    media.src = url;
+    if (item.type === 'video') media.controls = true;
+
+    const del = document.createElement('span');
+    del.className = 'del';
+    del.textContent = '×';
+    del.onclick = async () => {
+      await deleteFile(item.id);
+      URL.revokeObjectURL(url);
+      renderGallery();
+    };
+
+    div.appendChild(media);
+    div.appendChild(del);
+    box.appendChild(div);
+  });
+}
+
+/* ================= 启动 ================= */
+async function init() {
+  initDocs();
+  renderDocs();
+  updateUserInfo();
+  await openDB();
+  renderGallery();
+}
+init();
+</script>
+</body>
+</html>
